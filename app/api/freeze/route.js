@@ -26,8 +26,6 @@ export async function POST(request) {
     const senderAddress = tronWeb.address.fromPrivateKey(privateKey);
     console.log("senderAddress :", senderAddress);
 
-    // freezeAmount는 SUN 단위여야 합니다 (1 TRX = 1,000,000 SUN)
-    // freezeBalanceV2는 (amount, resource, address, options) 순서로 인자를 받습니다.
     const unsignedTx = await tronWeb.transactionBuilder.freezeBalanceV2(
       Number(freezeAmount),
       resource,

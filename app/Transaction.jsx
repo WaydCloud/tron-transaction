@@ -124,8 +124,7 @@ export default function Transaction() {
         setEstimatedEnergy(data.estimatedEnergy);
         setRecommendedFee(data.recommendedFeeLimit);
         setMessage(
-          `${data.message}\nEstimated Energy: ${
-            data.estimatedEnergy || "N/A"
+          `${data.message}\nEstimated Energy: ${data.estimatedEnergy || "N/A"
           }\nRecommended FeeLimit: ${data.recommendedFeeLimit} SUN`
         );
       } else {
@@ -211,87 +210,101 @@ export default function Transaction() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-3xl font-bold text-white mb-6 text-center">
-          USDT Transaction Sender
+    <div className="min-h-screen bg-gradient-to-br from-[rgba(0,0,0,1)] to-[rgba(31,41,55,1)] flex items-center justify-center p-4">
+      <div className="bg-[rgba(255,255,255,0.05)] backdrop-blur-md border border-[rgba(255,255,255,0.1)] rounded-2xl shadow-2xl p-10 w-full max-w-md">
+        <h1 className="text-center text-3xl font-bold text-[rgba(255,255,255,1)] mb-8">
+          USDT Transaction
         </h1>
 
-        {/* 잔액 및 리소스 표시 영역 */}
-        <div className="mb-4 p-6 bg-gray-900 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-white mb-4 border-b border-gray-600 pb-2">
-            Wallet Balance & Resources
+        {/* Wallet Balance & Resources */}
+        <div className="mb-6 p-6 bg-[rgba(255,255,255,0.05)] backdrop-blur-sm rounded-2xl shadow-lg border border-[rgba(255,255,255,0.1)]">
+          <h2 className="text-2xl font-bold text-[rgba(255,255,255,1)] mb-4 pb-2 border-b border-[rgba(255,255,255,0.1)] text-center">
+            Balance & Resources
           </h2>
           <div className="grid grid-cols-2 gap-4">
             {/* TRX 카드 */}
-            <div className="flex flex-col items-center p-4 bg-gray-700 rounded">
-              <p className="text-gray-300 text-sm">TRX</p>
-              <p className="text-white text-xl font-semibold">
+            <div className="flex flex-col items-center p-4 bg-[rgba(255,255,255,0.1)] rounded-lg shadow-md">
+              <p className="text-sm text-[rgba(209,213,219,1)]">TRX</p>
+              <p className="text-xl font-semibold text-[rgba(255,255,255,1)]">
                 {balance.trxBalance}
               </p>
             </div>
             {/* USDT 카드 */}
-            <div className="flex flex-col items-center p-4 bg-gray-700 rounded">
-              <p className="text-gray-300 text-sm">USDT</p>
-              <p className="text-white text-xl font-semibold">
+            <div className="flex flex-col items-center p-4 bg-[rgba(255,255,255,0.1)] rounded-lg shadow-md">
+              <p className="text-sm text-[rgba(209,213,219,1)]">USDT</p>
+              <p className="text-xl font-semibold text-[rgba(255,255,255,1)]">
                 {balance.usdtBalance}
               </p>
             </div>
             {/* Energy 카드 */}
-            <div className="flex flex-col items-center p-4 bg-gray-700 rounded">
-              <p className="text-gray-300 text-sm">Energy</p>
-              <p className="text-white text-xl font-semibold">
-                {balance.availableEnergy !== null
-                  ? balance.availableEnergy
-                  : "Loading..."}
+            <div className="flex flex-col items-center p-4 bg-[rgba(255,255,255,0.1)] rounded-lg shadow-md">
+              <p className="text-sm text-[rgba(209,213,219,1)]">Energy</p>
+              <p className="text-xl font-semibold text-[rgba(255,255,255,1)]">
+                {balance.availableEnergy !== null ? balance.availableEnergy : "Loading..."}
               </p>
             </div>
             {/* Bandwidth 카드 */}
-            <div className="flex flex-col items-center p-4 bg-gray-700 rounded">
-              <p className="text-gray-300 text-sm">Bandwidth</p>
-              <p className="text-white text-xl font-semibold">
-                {balance.availableBandwidth !== null
-                  ? balance.availableBandwidth
-                  : "Loading..."}
+            <div className="flex flex-col items-center p-4 bg-[rgba(255,255,255,0.1)] rounded-lg shadow-md">
+              <p className="text-sm text-[rgba(209,213,219,1)]">Bandwidth</p>
+              <p className="text-xl font-semibold text-[rgba(255,255,255,1)]">
+                {balance.availableBandwidth !== null ? balance.availableBandwidth : "Loading..."}
               </p>
             </div>
           </div>
-          <div className="mt-2 text-red-400 text-sm text-center">
-            {freezeMessage}
-            <div className="mt-1 flex justify-center space-x-2">
+          <div className="mt-4 text-sm text-center text-[rgba(239,68,68,1)]">
+            <div className="mt-2 justify-center grid grid-cols-2 gap-4">
               <button
                 onClick={() => handleFreeze("ENERGY")}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+                className="px-4 py-2 bg-[rgba(59,130,246,1)] hover:bg-[rgba(37,99,235,1)] text-[rgba(255,255,255,1)] rounded-lg transition-all duration-300"
               >
                 Freeze for ENERGY
               </button>
               <button
                 onClick={() => handleFreeze("BANDWIDTH")}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+                className="px-4 py-2 bg-[rgba(59,130,246,1)] hover:bg-[rgba(37,99,235,1)] text-[rgba(255,255,255,1)] rounded-lg transition-all duration-300"
               >
                 Freeze for BANDWIDTH
               </button>
             </div>
           </div>
+          {/* Wallet Address 버튼 및 QR 코드 영역 */}
+          <div className="mt-4">
+            <button
+              onClick={handleShowWalletAddress}
+              className="w-full py-2 px-4 bg-[rgba(245,158,11,1)] hover:bg-[rgba(217,119,6,1)] text-[rgba(255,255,255,1)] font-semibold rounded-lg mb-4 transition-all duration-300"
+            >
+              Show Wallet Address
+            </button>
+            {showWallet && walletAddress && (
+              <div className="flex flex-col items-center">
+                <p className="mb-2 text-[rgba(255,255,255,1)]">
+                  Wallet Address: {walletAddress}
+                </p>
+                <QRCode value={walletAddress} />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Receiver, Amount 입력 */}
         <div className="mb-4">
+          <label>Receiver Address</label>
           <input
             type="text"
             placeholder="Receiver Address"
             value={receiverAddress}
             onChange={(e) => setReceiverAddress(e.target.value)}
-            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 rounded-lg bg-[rgba(255,255,255,0.1)] text-[rgba(255,255,255,1)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-[rgba(59,130,246,1)] transition-all duration-300"
           />
         </div>
         <div className="mb-6">
+          <label>USDT Amount</label>
           <input
             type="number"
             placeholder="Amount (USDT)"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 rounded-lg bg-[rgba(255,255,255,0.1)] text-[rgba(255,255,255,1)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-[rgba(59,130,246,1)] transition-all duration-300"
           />
         </div>
 
@@ -302,15 +315,15 @@ export default function Transaction() {
             placeholder="FeeLimit (SUN) - optional"
             value={manualFeeLimit}
             onChange={(e) => setManualFeeLimit(e.target.value)}
-            className="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 rounded-lg bg-[rgba(255,255,255,0.1)] text-[rgba(255,255,255,1)] border border-[rgba(255,255,255,0.1)] focus:outline-none focus:ring-2 focus:ring-[rgba(59,130,246,1)] transition-all duration-300"
           />
           {recommendedFee && (
-            <p className="text-gray-400 text-sm mt-1">
+            <p className="text-sm mt-1 text-[rgba(209,213,219,1)]">
               Recommended FeeLimit: {recommendedFee} SUN
             </p>
           )}
           {estimatedEnergy && (
-            <p className="text-gray-400 text-sm">
+            <p className="text-sm text-[rgba(209,213,219,1)]">
               Estimated Energy Usage: {estimatedEnergy} SUN
             </p>
           )}
@@ -320,74 +333,30 @@ export default function Transaction() {
         <div className="space-y-4">
           <button
             onClick={handlePrepareTransaction}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+            className="w-full py-2 px-4 bg-[rgba(59,130,246,1)] hover:bg-[rgba(37,99,235,1)] text-[rgba(255,255,255,1)] font-semibold rounded-lg transition-all duration-300"
           >
             Prepare Transaction
           </button>
           <button
             onClick={handleSignTransaction}
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+            className="w-full py-2 px-4 bg-[rgba(34,197,94,1)] hover:bg-[rgba(22,163,74,1)] text-[rgba(255,255,255,1)] font-semibold rounded-lg transition-all duration-300"
           >
             Sign Transaction
           </button>
           <button
             onClick={handleBroadcastTransaction}
-            className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded"
+            className="w-full py-2 px-4 bg-[rgba(139,92,246,1)] hover:bg-[rgba(124,58,237,1)] text-[rgba(255,255,255,1)] font-semibold rounded-lg transition-all duration-300"
           >
             Broadcast Transaction
           </button>
         </div>
 
-        {/* 거래 내역 조회 */}
-        <div className="mt-6">
-          <button
-            onClick={fetchTransactions}
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded mb-4"
-          >
-            Load Transaction History
-          </button>
-          {transactions.length > 0 && (
-            <div className="bg-gray-700 p-4 rounded shadow-md max-h-60 overflow-y-auto">
-              <h3 className="text-white font-bold mb-2">Transaction History</h3>
-              <ul className="text-gray-200 text-sm">
-                {transactions.map((tx, index) => (
-                  <li
-                    key={index}
-                    className="mb-1 border-b border-gray-600 pb-1"
-                  >
-                    <p>Hash: {tx.txID || tx.hash}</p>
-                    <p>
-                      Status:{" "}
-                      {tx.ret && tx.ret[0] ? tx.ret[0].contractRet : "Pending"}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Wallet Address 버튼 및 QR 코드 영역 */}
-        <div className="mt-6">
-          <button
-            onClick={handleShowWalletAddress}
-            className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded mb-4"
-          >
-            Show Wallet Address
-          </button>
-          {showWallet && walletAddress && (
-            <div className="flex flex-col items-center">
-              <p className="text-white mb-2">Wallet Address: {walletAddress}</p>
-              <QRCode value={walletAddress} />
-            </div>
-          )}
-        </div>
-
         {/* 메시지 출력 영역 */}
         <div className="mt-6">
-          <p className="text-white whitespace-pre-wrap">{message}</p>
+          <p className="whitespace-pre-wrap text-[rgba(255,255,255,1)]">{message}</p>
         </div>
       </div>
     </div>
+
   );
 }
